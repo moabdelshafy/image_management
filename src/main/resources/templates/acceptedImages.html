@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Image Management</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" th:href="@{/css/stylish.css}">
+</head>
+<body>
+<div class="container">
+    <h1 align="center">Accepted Images</h1>
+    <div class="row">
+
+        <div style="display: flex;justify-content: space-between;margin-bottom: 5px;">
+            <a th:href="@{/image/}" class="btn btn-primary btn-sm mb-3">Create Image</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}" class="btn btn-primary btn-sm mb-3">Admin Page</a>
+            <a th:href="@{/logout}" class="btn btn-primary btn-sm mb-3">Logout</a>
+        </div>
+        <table border="1"
+               class="table table-responsive table-bordered table-striped">
+            <thead>
+            <tr align="center">
+                <th>Image</th>
+                <th>Description</th>
+                <th>Category</th>
+                <!--<th style="width: 15%" >Actions</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="img : ${images}">
+                <td><a th:href="@{${'/image/display/'+ img.id}}" target="_blank"><img
+                        th:src="@{${'/image/display/'+ img.id}}"
+                        class="card img-fluid" style="width: 200px"/></a></td>
+                <td th:text="${img.description}"></td>
+                <td th:switch="${img.category}">
+                    <span th:case="'1'">Living thing</span>
+                    <span th:case="'2'">Machine</span>
+                    <span th:case="'3'">Nature</span></td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>
